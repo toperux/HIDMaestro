@@ -124,9 +124,10 @@ internal static partial class DeviceNodeCreator
         // lets go after DIF_REGISTERDEVICE. Every registration and removal
         // of a program of this release holds that lock. Two bugchecks 0x139
         // on 2026-10-14 and 10-15 fired in this registration, at its class
-        // GUID write, while other programs created and removed HIDClass
-        // devnodes. The lock and the gate narrow that window. Neither is
-        // shown to close it.
+        // GUID write, on development builds before the lock (b9460ab3),
+        // while other programs created and removed HIDClass devnodes. None
+        // has been seen since the lock, through every release battery from
+        // v2.0.0 to v2.1.0.
         string instId = $@"ROOT\{enumerator}\{identity.Token}";
         // The identity's own child path unless an older build's vetoed
         // removal left a record there with no driver, which no later child
